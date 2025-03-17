@@ -1,0 +1,27 @@
+# Basic dependabot.yml file with configuration for two package ecosystems
+# GitHub documentation @ https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "monthly" # How often to check for updates (daily, weekly, monthly)
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-patch', 'version-update:semver-minor']
+
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    # Look for `package.json` and `lock` files in the `root` directory
+    directory: "/"
+    # Check the npm registry for updates every week
+    schedule:
+      interval: "weekly"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
